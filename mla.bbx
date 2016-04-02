@@ -99,7 +99,7 @@
 \DeclareFieldFormat{title:booklet}{\mkbibemph{#1}}
 \DeclareFieldFormat{title:collection}{\mkbibemph{#1}}
 \DeclareFieldFormat{title:incollection}{\mkbibquote{#1}}%
-\DeclareFieldFormat{title:inbook}{\mkbibquote{#1}}%platypus 1.0
+\DeclareFieldFormat{title:inbook}{\mkbibquote{#1}}%
 \DeclareFieldFormat{title:inproceedings}{\mkbibquote{#1}}%
 \DeclareFieldFormat{title:thesis}{\mkbibquote{#1}}%
 \DeclareFieldFormat{title:reviewedbook}{\bibstring{reviewof}\addspace\mkbibemph{#1}}%
@@ -112,7 +112,7 @@
   {\unspace\mkbibbrackets{#1}\addspace}%
 \DeclareFieldFormat[article]{version}{#1\isdot}%
 \DeclareFieldFormat[incollection]{bibliography:origyear}{\openrangeformat{#1}\addperiod}%
-\DeclareFieldFormat[video]{mla:publimedium}{\MakeCapital{film}}% 1.4.9 platypus don't forget to localize
+\DeclareFieldFormat[video]{mla:publimedium}{\MakeCapital{film}}%
 \DeclareFieldFormat{mla:publimedium}{\MakeCapital{#1}}%
 \DeclareFieldFormat{mla:capital}{\MakeCapital{#1}}%
 \DeclareFieldFormat{mla:capital:web}{%
@@ -142,19 +142,19 @@
   \ifhyperref%
     {\href{#1}{\emph{eBooks@Adelaide}}}%
     {\emph{eBooks@Adelaide}}}
-\DeclareFieldFormat{eprint:muse}{%5
+\DeclareFieldFormat{eprint:muse}{%
   \ifhyperref%
     {\href{#1}{\emph{Project Muse}}}%
     {\emph{Project Muse}}}
 \DeclareFieldFormat{urldate}{#1}%
 
 \DeclareBibliographyAlias{booklet}{book}
-\DeclareBibliographyAlias{bookinbook}{incollection}% platypus 1.5
+\DeclareBibliographyAlias{bookinbook}{incollection}
 \DeclareBibliographyAlias{collection}{book}
 \DeclareBibliographyAlias{reference}{book}
 \DeclareBibliographyAlias{movie}{video}
 
-\DeclareBibliographyAlias{inbook}{incollection}% platypus 1.0
+\DeclareBibliographyAlias{inbook}{incollection}
 
 \DeclareBibliographyAlias{manual}{customa}
 \DeclareBibliographyAlias{online}{article}
@@ -172,7 +172,7 @@
 \newboolean{bbx@mla-incollection}
 \newbool{bbx@inset}
 
-\DeclareBibliographyOption{dashed}[true]{% platypus 1.0 (from authortitle.bbx)
+\DeclareBibliographyOption{dashed}[true]{%
   \ifstrequal{#1}{true}
     {\ExecuteBibliographyOptions{pagetracker}%
      \renewbibmacro*{bbx:savehash}{\savefield{fullhash}{\bbx@lasthash}}}
@@ -213,8 +213,7 @@
   \setboolean{bbx@nodate}{#1}}
 
 
-% 0.7.1 for years with open range
-\newrobustcmd{\openrangeformat}[1]{% 0.7.1
+\newrobustcmd{\openrangeformat}[1]{%
   \begingroup%
     \let\blx@org@rangedash=\bibrangedash%
     \def\bibrangedash{%
@@ -223,8 +222,7 @@
     #1%
   \endgroup}
 
-% 0.7.1 for years with open range
-\newcommand*{\blx@openrangeformat}{% 0.7.1
+\newcommand*{\blx@openrangeformat}{%
   \ifx\@let@token\endgroup%
   \openrangemark%
   \fi}
@@ -246,7 +244,7 @@
 \newbibmacro*{bbx:savehash}{%
   \savefield{fullhash}{\bbx@lasthash}}
 
-\renewcommand*{\bibnamedash}{% suggested by StackExchange user Audrey
+\renewcommand*{\bibnamedash}{%
   \mlanamedash%
   \iffieldundef{nameaddon}{\adddot}{\nopunct}}%
 
@@ -254,7 +252,7 @@
 
 \renewbibmacro*{author}{%
   \ifthenelse{\ifuseauthor\AND\NOT\ifnameundef{author}}
-    {\usebibmacro{bbx:dashcheck}% platypus 1.0 from authortitle.bbx
+    {\usebibmacro{bbx:dashcheck}%
        {\bibnamedash}%
        {\ifbool{bbx@totalnames}%
          {\printnames[sortname][-\value{listtotal}]{author}}
@@ -343,13 +341,13 @@
 \renewbibmacro*{date}{\printdate}%
 
 \renewbibmacro*{url+urldate}{%
-  \ifthenelse{\boolean{bbx@publimedium}\AND\NOT \(\iffieldundef{url} \AND \iffieldundef{eprint}\)}% 0.9 platypus - check the logic here! should it be and or or between url and eprint?
+  \ifthenelse{\boolean{bbx@publimedium}\AND\NOT \(\iffieldundef{url} \AND \iffieldundef{eprint}\)}%
     {\printfield[mla:capital:web]{url}\newunit}%
     {\iffieldundef{urlyear}{}{\setunit{\addspace}}}%
   \iffieldundef{urlyear}%
     {}%
     {\printtext{\printurldate}%
-     \setunit{\addspace}}% Suggested by Stephen Brumbaugh
+     \setunit{\addspace}}%
   \ifthenelse{\boolean{bbx@publimedium}\AND\NOT\iffieldundef{url}}%
     {\ifthenelse{\boolean{bbx:gnoreminfo}}%
 	  {}%
@@ -467,7 +465,7 @@
   \setunit*{\addcomma\addspace}%
   \ifbool{bbx@mla-incollection}%
     {\printfield[bibliography:origyear]{origyear}\clearfield{origyear}}%
-    {\ifthenelse{\iffieldundef{volume}\OR\iffieldundef{volumes}}% 1.4.9 cleared up most spurious punct
+    {\ifthenelse{\iffieldundef{volume}\OR\iffieldundef{volumes}}%
       {\printorigdate\clearfield{origyear}}%
       {}%
 	}%
@@ -521,7 +519,7 @@
     {}%
 }
 
-\newbibmacro*{mla:isbn/issn+doi+eprint}{% 0.7.1 modeled after biblatex-apa, here just a proof of concept and work in progress, ignoring any of the URL hiding implemented by Philip Kime
+\newbibmacro*{mla:isbn/issn+doi+eprint}{%
   \ifthenelse{\boolean{bbx:gnoreminfo}\OR\boolean{bbx:lnoreminfo}}%
     {\global\boolfalse{bbx:lnoreminfo}}%
     {\printfield{isbn}\clearfield{isbn}%
@@ -578,7 +576,7 @@
     \OR%
     \iffieldequalstr{entrysubtype}{play}%
 	\OR%
-	\iffieldequalstr{entrytype}{bookinbook}}% 1.5 platypus
+	\iffieldequalstr{entrytype}{bookinbook}}%
       {\usebibmacro{title:incollection:italics}}%
       {\setboolean{bbx@mla-incollection}{true}%
        \usebibmacro{title}%
@@ -784,7 +782,7 @@
   \setunit{\addcolon\addspace}%
   \printfield{pages}%
   \newunit\newblock%
-  \usebibmacro{publimedium}% 1.4.9 updated
+  \usebibmacro{publimedium}%
   \usebibmacro{finentry}}
 
 \DeclareBibliographyDriver{inreference}{%
@@ -916,7 +914,7 @@
   \setunit{\addcomma\addspace}%
   \printfield{year}%
   \newunit\newblock%
-  \usebibmacro{publimedium}% 1.4.9 updated to most recent MLA format
+  \usebibmacro{publimedium}%
   \usebibmacro{finentry}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -927,7 +925,6 @@
 % * \DeclareBibliographyDriver{artwork}
 % * \DeclareBibliographyDriver{audio}
 % * \DeclareBibliographyDriver{image}
-% * \DeclareBibliographyDriver{movie}
 % * \DeclareBibliographyDriver{music}
 % * \DeclareBibliographyDriver{performance}
 %
@@ -974,7 +971,7 @@
     {\setunit*{\addcolon\space}}%
   \printlist{publisher}%
   \setunit*{\addcomma\space}%
-  \ifbool{bbx@nodate}{\printtext{n.d.}}% platypus-don't forget to localize this string!
+  \ifbool{bbx@nodate}{\printtext{n.d.}}%
   \printdate%
   \newunit}
 
@@ -1148,7 +1145,7 @@
      \printfield{number}\clearfield{number}%
      \setunit*{\addcomma\space}%
      \usebibmacro{mla:isbn/issn+doi+eprint}%
-     \setunit{\addspace}% platypus-1.0b removed asterisk
+     \setunit{\addspace}%
      \usebibmacro{issue+date}%
      \newunit\newblock
      \newunit}%
